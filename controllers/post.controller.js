@@ -49,4 +49,34 @@ exports.editPost = (req, res) => {
     })
 }
 
-// exports.
+exports.deletePost = async(req, res) => {
+    const {postid, userid } = req.params
+    const user = await User.findById(userid)
+    user.posts = user.posts.filter( post => post !== postid)
+    await user.save()
+    await Post.findByIdAndDelete(postid)
+
+    res.status(200).json({
+        success : true,
+        message : "Post deleted successfully"
+    })
+}
+
+exports.addComment = async (req, res) => {
+    const { postid } = req.params
+    const { name, value } = req.body
+
+    const post = await Post.findById(postid)
+    post.comment.push({
+        userName : name,
+        comment : value,
+        commentDate : new Date()
+    })
+    await post.save()
+
+    res.status(200).json({
+        success : true,
+        message : "Comment added successfully",
+        post
+    })
+}
