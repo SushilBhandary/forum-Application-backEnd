@@ -6,7 +6,7 @@ const config = require("./config/config")
 const conn = async() => {
     await mongoose.connect(config.MONGODB_URL)
     .then(console.log("DB CONNECTED"))
-    .catch((e) => console.log("Error", e))
+    .catch((e) => console.log("Error  ---->", e))
 }
 
 const onListening = () => {

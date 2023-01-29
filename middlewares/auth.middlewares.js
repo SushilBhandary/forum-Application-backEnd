@@ -11,12 +11,10 @@ exports.auth = (req, res, next) => {
     try {
         const decode = JWT.verify(token, config.JWT_SECRET)
         req.user = decode
-       
+        return next()
     } catch (error) {
         return res.status(401).json({
             error : "Not authorized to access this routec 2"
         })
     }
-    return next()
 }
-

@@ -4,12 +4,17 @@ const User = require("../models/user.scheme")
 exports.getPosts = (req, res) => {
     Post.find({})
     .sort({data : -1})
-    .then( (err, data) => {
+    .then( (data, err) => {
         return res.status(200).json({
             posts : data
         })
     })
-    .catch ( err => console.log(err))
+    .catch ( err => {
+        console.log(err)
+        return res.status(401).json({
+            error : "Something went wrong"
+        })
+    })
 }
 
 exports.createPost = async(req, res) => {

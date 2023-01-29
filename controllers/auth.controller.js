@@ -1,5 +1,4 @@
 const User = require("../models/user.scheme")
-const Todo = require("../models/todo.schema")
 const JWT = require("jsonwebtoken")
 const config = require("../config/config")
 const bcrypt = require("bcryptjs")

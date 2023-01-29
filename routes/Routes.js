@@ -9,7 +9,7 @@ const  {
 const  {
     getPosts,
     createPost,
-    editPost,
+    editPost, 
     deletePost,
     addComment
 } = require('../controllers/post.controller')
@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
 router.post("/signup",signUp);
 router.post("/login", login);
 router.post("/logout", auth, logout);
-router.post("/get-post", auth, getPosts);
+router.get("/get-post", auth, getPosts);
 router.post("/create-post/:userid", auth, createPost);
 router.post("/create-post/:userid", auth, createPost);
 router.put("/edit-post/:postid/:userid", auth, editPost);
