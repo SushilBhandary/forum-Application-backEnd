@@ -5,6 +5,10 @@ const postSchema = new mongoose.Schema({
         type : String,
         required : [true, "articl required"]
     },
+    createdByName : {
+        type : String,
+        required : [true, "created By Name required"]
+    },
     createdBy : {
         type : [mongoose.Schema.Types.ObjectId],
         ref : 'user'

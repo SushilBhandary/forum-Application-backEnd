@@ -17,17 +17,39 @@ exports.getPosts = (req, res) => {
     })
 }
 
+exports.getMyPosts = (req, res) => {
+    const {userid} = req.params
+    User.findById(userid)
+    .then( (data, err) => {
+        let myPost = []
+        data.posts.forEach( async(element) => {
+            let a = await Post.findById(element)
+            console.log('a', a);
+            myPost.push(a)
+        });
+        console.log(myPost);
+        return res.status(200).json({
+            posts : myPost
+        })
+    })
+    .catch ( err => {
+        console.log(err)
+        return res.status(401).json({
+            error : "Something went wrong"
+        })
+    })
+}
+
 exports.createPost = async(req, res) => {
     const {article} = req.body
     const {userid} = req.params
-
+    const user = await User.findById(userid)
     const post = await Post.create({
         article  : article,
-        createdBy : userid
+        createdBy : userid,
+        createdByName : user.name
     })
     await post.save()
-
-    const user = await User.findById(userid)
     user.posts.push(post._id)
     await user.save()
 
