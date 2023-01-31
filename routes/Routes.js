@@ -24,7 +24,6 @@ router.post("/logout", auth, logout);
 router.get("/get-post", auth, getPosts);
 router.get("/get-my-post/:userid", auth, getMyPosts);
 router.post("/create-post/:userid", auth, createPost);
-router.post("/create-post/:userid", auth, createPost);
 router.put("/edit-post/:postid/:userid", auth, editPost);
 router.delete("/delete-post/:postid/:userid", auth, deletePost);
 router.post("/add-comments/:postid", auth, addComment);

@@ -20,14 +20,14 @@ exports.getPosts = (req, res) => {
 exports.getMyPosts = (req, res) => {
     const {userid} = req.params
     User.findById(userid)
-    .then( (data, err) => {
+    .then( async(data, err) => {
         let myPost = []
-        data.posts.forEach( async(element) => {
-            let a = await Post.findById(element)
-            console.log('a', a);
-            myPost.push(a)
-        });
-        console.log(myPost);
+        for (let index = 0; index < data.posts.length; index++) {
+            let a = await Post.findById(data.posts[index])
+            if (a) {
+                myPost.push(a)
+            }
+        }
         return res.status(200).json({
             posts : myPost
         })
