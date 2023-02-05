@@ -5,6 +5,19 @@ exports.getPosts = (req, res) => {
     Post.find({})
     .sort({data : -1})
     .then( (data, err) => {
+        // Bubble Sort
+        let len = data.length,
+        i, j, temp;
+        for (i=0; i < len; i++){
+            for (j=0 ; j < len-i-1; j++){
+                if ( new Date( data[j].createdAt ).getTime() < new Date( data[j+1].createdAt ).getTime() ){
+                    
+                    temp = data[j];
+                    data[j] = data[j+1];
+                    data[j+1] = temp;
+                }
+            }
+        }
         return res.status(200).json({
             posts : data
         })
@@ -60,11 +73,11 @@ exports.createPost = async(req, res) => {
 
 }
 
-exports.editPost = (req, res) => {
-    const {postid, userid} = req.params
+exports.editPost = async(req, res) => {
+    const {postid} = req.params
     const {article} = req.body
 
-    const post = Post.findByIdAndUpdate(postid, {article}, {new :true})
+    const post = await Post.findByIdAndUpdate(postid, {article}, {new :true})
     if (! post) {
         return res.status(401).json({
             error : "Post does not Exist "
