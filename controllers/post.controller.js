@@ -3,6 +3,8 @@ const User = require("../models/user.scheme")
 
 exports.getPosts = (req, res) => {
     Post.find({})
+    // db.collection.find().skip(20).limit(10)
+    // db.collection.findOne().sort({ _id: -1 })
     .sort({data : -1})
     .then( (data, err) => {
         // Bubble Sort
